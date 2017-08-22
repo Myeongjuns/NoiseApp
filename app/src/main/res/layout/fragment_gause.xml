@@ -1,0 +1,102 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.gmail.blackbull8810.noiseapp.GauseFragment"
+    android:background="#50CCE7"
+    android:id="@+id/layout">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:ignore="UselessParent">
+
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="35dp"
+            android:text="현재 우리집 층간소음 수치"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@android:color/background_light"
+            android:textSize="23sp" />
+
+        <View
+            android:id="@+id/view3"
+            android:layout_width="330dp"
+            android:layout_height="1dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="85dp"
+            android:background="#DDDDDD" />
+
+        <com.github.anastr.speedviewlib.PointerSpeedometer
+            android:id="@+id/pointerSpeedometer"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+
+            android:layout_marginTop="100dp"
+            app:sv_speedTextSize="30dp"
+            app:sv_unit="db"
+            app:sv_unitTextSize="30dp" />
+        <!--android:layout_centerVertical="true"-->
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="340dp"
+            android:layout_height="1dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="410dp"
+            android:background="#DDDDDD" />
+
+        <View
+            android:id="@+id/view2"
+            android:layout_width="1dp"
+            android:layout_height="80dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="420dp"
+            android:background="#DDDDDD" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:textSize="50sp"
+            tools:ignore="HardcodedText"
+            android:layout_alignTop="@+id/pointerSpeedometer"
+            android:layout_alignEnd="@+id/pointerSpeedometer" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="14dp"
+            android:text="캡스톤4조_소음측정시스템" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="10db : 무음에 가까운\n20db : 시계초침 소리\n30db : 속삭이는 소리\n40db : 조용한 집 , 도서관\n50db : 조용한 사무실\n60db : 보통회화"
+            android:textSize="11sp"
+            android:layout_alignTop="@+id/view2"
+            android:layout_alignStart="@+id/pointerSpeedometer" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/textView4"
+            android:layout_alignBottom="@+id/textView4"
+            android:layout_alignEnd="@+id/view3"
+            android:text="70db : 시끄러운 사무실\n80db : 지하철 차내 소음\n90db : 소음이 심한 공장 안\n100db : 열차 철도변 소음\n110db : 자동차의 경적소음\n120db : 전투기의 이착륙 소음"
+            android:textSize="11sp" />
+    </RelativeLayout>
+
+</FrameLayout>
