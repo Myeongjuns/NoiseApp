@@ -10,7 +10,9 @@ import android.view.ViewGroup;
 
 /**
  * A simple {@link Fragment} subclass.
+ * 사용하지 않는 Fragment
  */
+
 public class ThirdFragment2 extends Fragment {
 
     private View view;
