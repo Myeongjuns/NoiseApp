@@ -11,7 +11,7 @@ import android.os.Handler;
 
 public class Intro extends Activity {
 
-    Handler handler = new Handler();
+    private Handler handler;
 
     Runnable r = new Runnable() {
         @Override
@@ -20,6 +20,7 @@ public class Intro extends Activity {
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent); // 다음화면으로 넘어가기
             finish(); // Activity 화면 제거
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         }
     };
 
@@ -27,13 +28,19 @@ public class Intro extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.intro); // xml과 java소스를 연결
+        init();
+        handler.postDelayed(r, 2000);
     } // end of onCreate
 
     @Override
     protected void onResume() {
         super.onResume();
     // 다시 화면에 들어어왔을 때 예약 걸어주기
-        handler.postDelayed(r, 4000); // 4초 뒤에 Runnable 객체 수행
+        //handler.postDelayed(r, 2000); // 4초 뒤에 Runnable 객체 수행
+    }
+
+    public void init() {
+        handler = new Handler();
     }
 
     @Override
