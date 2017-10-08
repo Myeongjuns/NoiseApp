@@ -185,8 +185,8 @@ public class ThirdFragment extends Fragment {
 
                                     }
                                 });
-                                tv.setText("");
-                                tv.setText("기록수 : "+ listvalue.size() +"  최대값 : "+ max +"(dB)  평균 : "+ avg +"(dB)");
+//                                tv.setText("");
+//                                tv.setText("기록수 : "+ listvalue.size() +"  최대값 : "+ max +"(dB)  평균 : "+ avg +"(dB)");
 
                                 Toast.makeText(getActivity(), "소음기록이 전체 삭제되었습니다.", Toast.LENGTH_LONG).show();
                             }
@@ -260,8 +260,8 @@ public class ThirdFragment extends Fragment {
 
                                     }
                                 });
-                                tv.setText("");
-                                tv.setText("기록수 : "+ listvalue.size() +"  최대값 : "+ max +"(dB)  평균 : "+ avg +"(dB)");
+//                                tv.setText("");
+//                                tv.setText("기록수 : "+ listvalue.size() +"  최대값 : "+ max +"(dB)  평균 : "+ avg +"(dB)");
 
                                 Toast.makeText(getActivity(), "선택하신 소음기록이 삭제되었습니다.", Toast.LENGTH_LONG).show();
                             }
@@ -294,7 +294,7 @@ public class ThirdFragment extends Fragment {
 
 
     public void selectData(){
-        String sql = "select * from noisevalue";
+        String sql = "select * from noisevalue order by day desc";
         Cursor result = database.rawQuery(sql,null);
         result.moveToFirst();
         while (!result.isAfterLast()){
@@ -370,7 +370,7 @@ public class ThirdFragment extends Fragment {
 
             holder.listvalue.setText(mData.ListValue);
             holder.listday.setText(mData.ListTime.split(" ")[0] + "\n" +mData.ListTime.split(" ")[1]);
-            holder.listvaluekorea.setText(mData.ListValueKorea);
+//            holder.listvaluekorea.setText(mData.ListValueKorea);
             holder.listimg.setImageDrawable(mData.ListImg);
 
             holder.listimg.getLayoutParams().width = 80;

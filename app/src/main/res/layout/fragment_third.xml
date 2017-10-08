@@ -17,7 +17,7 @@
         android:paddingTop="5dp"
         android:paddingBottom="5dp">
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="날짜"
@@ -26,7 +26,7 @@
             />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="소음수치"
@@ -34,19 +34,13 @@
             android:textColor="#ffffff"/>
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="삭제"
             android:gravity="center"
-            android:textColor="#ffffff"/>
+            android:textColor="#ffffff" />
     </LinearLayout>
-
-    <ListView
-        android:id="@+id/listview1"
-        android:layout_below="@id/ll_top"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
 
     <TextView
         android:id="@+id/tv_empty_data"
@@ -71,4 +65,12 @@
         android:textColor="#ffffff"
         android:textStyle="bold"
         android:textSize="17dp"/>
+
+    <ListView
+        android:id="@+id/listview1"
+        android:layout_below="@id/ll_top"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/btn_all_delete"/>
+
 </RelativeLayout>

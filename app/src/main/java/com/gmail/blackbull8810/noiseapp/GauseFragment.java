@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.StrictMode;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,8 +45,9 @@ public class GauseFragment extends Fragment {
 
     //TCP 연결 관련..
     Socket socket;
+    Context context;
     private int port = 5000;
-    private final String serverIp = "172.20.10.5";
+    private final String serverIp = "172.20.10.2";
     //private final String serverIp = "192.168.0.145";
     //private final String serverIp = "172.17.46.3";
     //private final String serverIp = "locahost";
@@ -226,7 +228,8 @@ public class GauseFragment extends Fragment {
                 PushWakeLock.releaseCpuLock();
 //                SystemClock.sleep(1000);
 
-                DBHelper test = new DBHelper(getContext());
+                DBHelper test = new DBHelper(context);
+
                 database = test.getReadableDatabase();
 
                 int data3 = (int)data2;
@@ -245,6 +248,12 @@ public class GauseFragment extends Fragment {
 
     void InsertNoiseDatabase() {
 
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        context = getActivity();
     }
 
     void NoiseBackgroundChange_base() {
