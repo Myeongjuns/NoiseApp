@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.anastr.speedviewlib.PointerSpeedometer;
+import com.github.anastr.speedviewlib.ProgressiveGauge;
 import com.github.anastr.speedviewlib.SpeedView;
 
 import java.io.BufferedReader;
@@ -57,6 +58,7 @@ public class GauseFragment extends Fragment {
 
     SpeedView speedView;
     PointerSpeedometer pointerSpeedometer;
+    ProgressiveGauge progressiveGauge;
     View view;
     FrameLayout fl;
 
@@ -97,17 +99,20 @@ public class GauseFragment extends Fragment {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
-        view = inflater.inflate(R.layout.fragment_gause, container, false);
+        view = inflater.inflate(R.layout.test_layout, container, false);
 
         myHandler = new MyHandler();
 
-        textView = (TextView) view.findViewById(R.id.textView);
+//        textView = (TextView) view.findViewById(R.id.textView);
         fl = (FrameLayout) view.findViewById(R.id.layout);
 
-        pointerSpeedometer= (PointerSpeedometer) view.findViewById(R.id.pointerSpeedometer);
-        pointerSpeedometer.setMaxSpeed(120);
+//        pointerSpeedometer= (PointerSpeedometer) view.findViewById(R.id.pointerSpeedometer);
+//        pointerSpeedometer.setMaxSpeed(120);
 
-        textView.setVisibility(View.GONE);
+        progressiveGauge = (ProgressiveGauge) view.findViewById(R.id.progressiveGauge);
+        progressiveGauge.setMaxSpeed(120);
+
+//        textView.setVisibility(View.GONE);
 
         try {
 
@@ -194,7 +199,8 @@ public class GauseFragment extends Fragment {
 
             textView.setText(data1);
             //speedView.speedTo(data2);
-            pointerSpeedometer.speedTo(data2);
+            //pointerSpeedometer.speedTo(data2);
+            progressiveGauge.speedTo(data2);
 
             //80이상 소음 발생시 노티발생.
             if (data2 > 80) {
@@ -248,7 +254,8 @@ public class GauseFragment extends Fragment {
 
         fl.setBackgroundColor(Color.RED);
 //        pointerSpeedometer.setCenterCircleColor(Color.RED);
-        pointerSpeedometer.setBackgroundCircleColor(Color.RED);
+//        pointerSpeedometer.setBackgroundCircleColor(Color.RED);
+        progressiveGauge.setBackgroundColor(Color.RED);
 //        fl.setVisibility();
 //        mp.start();
         Toast.makeText(view.getContext(), "층간 소음이 심합니다.!!!!!", Toast.LENGTH_SHORT).show();
