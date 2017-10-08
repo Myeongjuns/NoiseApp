@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -37,12 +38,15 @@ public class ThirdFragment extends Fragment {
     ArrayList<String> listvalue,listday,listvaluekorea = null;
     String time;
     AlertDialog dialog;
-    TextView tv,tv2;
+    TextView tv;
     int avg = 0;
     int max;
     int a;
     int sum = 0;
     Cursor cursor;
+
+    private Button btn_all_delete;
+    private TextView tv_empty_data;
 
     //UI에 데이터가 변경된 경우 다시 그려주게될 Runnable interface. 데이터를 갱신하고, 이를 화면에
     //반영해야할 경우에는 반드시 Activity의 runOnUiThread(Runnable r) 메쏘드를 이용해서 호출해야
@@ -71,12 +75,15 @@ public class ThirdFragment extends Fragment {
         listday = new ArrayList<String>();
         listvaluekorea = new ArrayList<String>();
 
+        btn_all_delete = (Button) view.findViewById(R.id.btn_all_delete);
+        tv_empty_data = (TextView) view.findViewById(R.id.tv_empty_data);
+
         LinearLayout layout = new LinearLayout(getActivity());
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT);
         lp.setMargins(30, 20, 0, 20); //넥서스기준
         //lp.setMargins(180, 20, 0, 20);
 
-        LinearLayout layout2 = new LinearLayout(getActivity());
+//        LinearLayout layout2 = new LinearLayout(getActivity());
         LinearLayout.LayoutParams lp2 = new LinearLayout.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT);
         lp2.setMargins(880, 20, 0, 20); //넥서스 기준
         //lp2.setMargins(1200, 20, 0, 20); //노트기준
@@ -113,25 +120,21 @@ public class ThirdFragment extends Fragment {
 
         mListView.setAdapter(mAdapter);
 
+        setView();
 
-        tv = new TextView(getActivity());
-        tv.setText("");
-        tv.setText("기록수 : "+ listvalue.size() +"  최대값 : "+ max +"(dB)  평균 : "+ avg +"(dB)");
-        tv.setTextColor(Color.BLACK);
-        tv.setTextSize(15);
-
-        tv2 = new TextView(getActivity());
-        tv2.setText("전체삭제");
-        tv2.setTextColor(Color.BLACK);
-        tv2.setTextSize(15);
-
-        layout.addView(tv, lp);
-        layout2.addView(tv2, lp2);
+//        tv = new TextView(getActivity());
+//        tv.setText("");
+//        tv.setText("기록수 : "+ listvalue.size() +"  최대값 : "+ max +"(dB)  평균 : "+ avg +"(dB)");
+//        tv.setTextColor(Color.BLACK);
+//        tv.setTextSize(15);
+//
+//        layout.addView(tv, lp);
+//        layout2.addView(tv2, lp2);
 
         mListView.addHeaderView(layout);
-        mListView.addFooterView(layout2);
+//        mListView.addFooterView(layout2);
 
-        layout2.setOnClickListener(new View.OnClickListener() {
+        btn_all_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -177,7 +180,7 @@ public class ThirdFragment extends Fragment {
                                             avg = sum / listvalue.size();
 
                                         }
-
+                                        setView();
                                         mAdapter.notifyDataSetChanged();
 
                                     }
@@ -252,7 +255,7 @@ public class ThirdFragment extends Fragment {
                                             avg = sum / listvalue.size();
 
                                         }
-
+                                        setView();
                                         mAdapter.notifyDataSetChanged();
 
                                     }
@@ -278,6 +281,17 @@ public class ThirdFragment extends Fragment {
 
         return view;
     }
+
+    public void setView(){
+        if(mAdapter.getCount() == 0){
+            tv_empty_data.setVisibility(View.VISIBLE);
+            mListView.setVisibility(View.GONE);
+        }else{
+            tv_empty_data.setVisibility(View.GONE);
+            mListView.setVisibility(View.VISIBLE);
+        }
+    }
+
 
     public void selectData(){
         String sql = "select * from noisevalue";
@@ -344,7 +358,6 @@ public class ThirdFragment extends Fragment {
 
                 holder.listvalue = (TextView) convertView.findViewById(R.id.txtvalue);
                 holder.listday = (TextView) convertView.findViewById(R.id.txtdays);
-                holder.listvaluekorea = (TextView) convertView.findViewById(R.id.txtvaluekorea);
                 holder.listimg = (ImageView) convertView.findViewById(R.id.listimg);
 
                 convertView.setTag(holder);
@@ -354,8 +367,9 @@ public class ThirdFragment extends Fragment {
 
             ListData mData = mListData.get(position);
 
+
             holder.listvalue.setText(mData.ListValue);
-            holder.listday.setText(mData.ListTime);
+            holder.listday.setText(mData.ListTime.split(" ")[0] + "\n" +mData.ListTime.split(" ")[1]);
             holder.listvaluekorea.setText(mData.ListValueKorea);
             holder.listimg.setImageDrawable(mData.ListImg);
 
