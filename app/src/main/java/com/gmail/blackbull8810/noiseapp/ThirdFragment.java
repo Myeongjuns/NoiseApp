@@ -11,6 +11,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.res.TypedArrayUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +27,7 @@ import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 
 public class ThirdFragment extends Fragment {
@@ -115,7 +117,7 @@ public class ThirdFragment extends Fragment {
 //
 //        }
 
-
+        selectData();
         mListView.setAdapter(mAdapter);
 
         setView();
@@ -134,7 +136,8 @@ public class ThirdFragment extends Fragment {
 //        mListView.addFooterView(layout2);
 
 
-        selectData();
+
+
         mAdapter.notifyDataSetChanged();
 
 
@@ -296,6 +299,7 @@ public class ThirdFragment extends Fragment {
 
 
     public void selectData(){
+        mListData.clear();
         String sql = "select * from noisevalue order by day desc";
         Cursor result = database.rawQuery(sql,null);
         result.moveToFirst();
@@ -379,7 +383,7 @@ public class ThirdFragment extends Fragment {
             holder.listvalue.setText(mData.ListValue);
             holder.listday.setText(mData.ListTime.split(" ")[0] + "\n" +mData.ListTime.split(" ")[1]);
 //            holder.listvaluekorea.setText(mData.ListValueKorea);
-            holder.listimg.setImageDrawable(mData.ListImg);
+//            holder.listimg.setImageDrawable(mData.ListImg);
 
             holder.listimg.getLayoutParams().width = 80;
 
