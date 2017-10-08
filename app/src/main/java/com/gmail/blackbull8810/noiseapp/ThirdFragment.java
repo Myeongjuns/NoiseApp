@@ -11,6 +11,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +36,8 @@ public class ThirdFragment extends Fragment {
     private ListView mListView = null;
     private ListViewAdapter mAdapter = null;
     SQLiteDatabase database;
-    ArrayList<String> listvalue,listday,listvaluekorea = null;
+//    ArrayList<String> listvalue,listday,listvaluekorea = null;
+    private ArrayList<ListData> mListData = new ArrayList<ListData>();
     String time;
     AlertDialog dialog;
     TextView tv;
@@ -71,9 +73,9 @@ public class ThirdFragment extends Fragment {
 
         //a = (int)(Math.random()*300);
 
-        listvalue = new ArrayList<String>();
-        listday = new ArrayList<String>();
-        listvaluekorea = new ArrayList<String>();
+//        listvalue = new ArrayList<String>();
+//        listday = new ArrayList<String>();
+//        listvaluekorea = new ArrayList<String>();
 
         btn_all_delete = (Button) view.findViewById(R.id.btn_all_delete);
         tv_empty_data = (TextView) view.findViewById(R.id.tv_empty_data);
@@ -94,33 +96,30 @@ public class ThirdFragment extends Fragment {
 //        String sql = "insert into noisevalue values(null,'"+a+"','"+time+"','위험 수치');";
 //        database.execSQL(sql);
 
-
-
-        selectData();
-
         mAdapter = new ListViewAdapter(this.getContext());
         mListView = (ListView) view.findViewById(R.id.listview1);
 
         sum = 0;
         avg = 0;
 
-        for(int i = 0; i < listvalue.size(); i++) {
-            mAdapter.addItem(listvalue.get(i), listday.get(i), listvaluekorea.get(i), getResources().getDrawable(R.drawable.delete));
-
-            if(max > Integer.parseInt(listvalue.get(i))){
-
-            }else{
-                max = Integer.parseInt(listvalue.get(i));
-            }
-            sum = sum + Integer.parseInt(listvalue.get(i));
-            avg = sum / listvalue.size();
-
-        }
+//        for(int i = 0; i < listvalue.size(); i++) {
+//            mAdapter.addItem(listvalue.get(i), listday.get(i), listvaluekorea.get(i), getResources().getDrawable(R.drawable.delete));
+//
+//            if(max > Integer.parseInt(listvalue.get(i))){
+//
+//            }else{
+//                max = Integer.parseInt(listvalue.get(i));
+//            }
+//            sum = sum + Integer.parseInt(listvalue.get(i));
+//            avg = sum / listvalue.size();
+//
+//        }
 
 
         mListView.setAdapter(mAdapter);
 
         setView();
+
 
 //        tv = new TextView(getActivity());
 //        tv.setText("");
@@ -133,6 +132,11 @@ public class ThirdFragment extends Fragment {
 
         mListView.addHeaderView(layout);
 //        mListView.addFooterView(layout2);
+
+
+        selectData();
+        mAdapter.notifyDataSetChanged();
+
 
         btn_all_delete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -150,41 +154,40 @@ public class ThirdFragment extends Fragment {
                                 String sql2 = "delete from noisevalue ;";
                                 database.execSQL(sql2);
 
-                                listvalue.clear();
-                                listday.clear();
-                                listvaluekorea.clear();
+                                mListData.clear();
+                                setView();
+                                mAdapter.notifyDataSetChanged();
 
-
-                                getActivity().runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-
-                                        selectData();
-
-                                        mAdapter.clearAllItems();
-
-                                        sum = 0;
-                                        avg = 0;
-                                        max = 0;
-
-                                        for (int i = 0; i < listvalue.size(); i++) {
-                                            mAdapter.addItem(listvalue.get(i), listday.get(i), listvaluekorea.get(i), getResources().getDrawable(R.drawable.delete));
-
-                                            if(max > Integer.parseInt(listvalue.get(i))){
-
-                                            }else{
-                                                max = Integer.parseInt(listvalue.get(i));
-                                            }
-
-                                            sum = sum + Integer.parseInt(listvalue.get(i));
-                                            avg = sum / listvalue.size();
-
-                                        }
-                                        setView();
-                                        mAdapter.notifyDataSetChanged();
-
-                                    }
-                                });
+//                                getActivity().runOnUiThread(new Runnable() {
+//                                    @Override
+//                                    public void run() {
+//
+//                                        selectData();
+//
+//                                        mAdapter.clearAllItems();
+//
+//                                        sum = 0;
+//                                        avg = 0;
+//                                        max = 0;
+//
+//                                        for (int i = 0; i < listvalue.size(); i++) {
+//                                            mAdapter.addItem(listvalue.get(i), listday.get(i), listvaluekorea.get(i), getResources().getDrawable(R.drawable.delete));
+//
+//                                            if(max > Integer.parseInt(listvalue.get(i))){
+//
+//                                            }else{
+//                                                max = Integer.parseInt(listvalue.get(i));
+//                                            }
+//
+//                                            sum = sum + Integer.parseInt(listvalue.get(i));
+//                                            avg = sum / listvalue.size();
+//
+//                                        }
+//                                        setView();
+//                                        mAdapter.notifyDataSetChanged();
+//
+//                                    }
+//                                });
 //                                tv.setText("");
 //                                tv.setText("기록수 : "+ listvalue.size() +"  최대값 : "+ max +"(dB)  평균 : "+ avg +"(dB)");
 
@@ -208,9 +211,10 @@ public class ThirdFragment extends Fragment {
 
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
 
-                ListData mdata = mAdapter.mListData.get(position - 1);
+                Log.d("#position->",position+"");
+                final ListData mdata = mListData.get(position-1);
                 final String value = mdata.ListTime;
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -222,44 +226,42 @@ public class ThirdFragment extends Fragment {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
 
-                                String sql2 = "delete from noisevalue where day ='" + value + "';";
+                                String sql2 = "delete from noisevalue where num ='" + mdata.id + "';";
                                 database.execSQL(sql2);
 
-                                listvalue.clear();
-                                listday.clear();
-                                listvaluekorea.clear();
-
-
-                                getActivity().runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-
-                                        selectData();
-
-                                        mAdapter.clearAllItems();
-
-                                        sum = 0;
-                                        avg = 0;
-                                        max = 0;
-
-                                        for (int i = 0; i < listvalue.size(); i++) {
-                                            mAdapter.addItem(listvalue.get(i), listday.get(i), listvaluekorea.get(i), getResources().getDrawable(R.drawable.delete));
-
-                                            if(max > Integer.parseInt(listvalue.get(i))){
-
-                                            }else{
-                                                max = Integer.parseInt(listvalue.get(i));
-                                            }
-
-                                            sum = sum + Integer.parseInt(listvalue.get(i));
-                                            avg = sum / listvalue.size();
-
-                                        }
-                                        setView();
-                                        mAdapter.notifyDataSetChanged();
-
-                                    }
-                                });
+                                mListData.remove(position-1);
+                                setView();
+                                mAdapter.notifyDataSetChanged();
+//                                getActivity().runOnUiThread(new Runnable() {
+//                                    @Override
+//                                    public void run() {
+//
+//                                        selectData();
+//
+//                                        mAdapter.clearAllItems();
+//
+//                                        sum = 0;
+//                                        avg = 0;
+//                                        max = 0;
+//
+//                                        for (int i = 0; i < listvalue.size(); i++) {
+//                                            mAdapter.addItem(listvalue.get(i), listday.get(i), listvaluekorea.get(i), getResources().getDrawable(R.drawable.delete));
+//
+//                                            if(max > Integer.parseInt(listvalue.get(i))){
+//
+//                                            }else{
+//                                                max = Integer.parseInt(listvalue.get(i));
+//                                            }
+//
+//                                            sum = sum + Integer.parseInt(listvalue.get(i));
+//                                            avg = sum / listvalue.size();
+//
+//                                        }
+//                                        setView();
+//                                        mAdapter.notifyDataSetChanged();
+//
+//                                    }
+//                                });
 //                                tv.setText("");
 //                                tv.setText("기록수 : "+ listvalue.size() +"  최대값 : "+ max +"(dB)  평균 : "+ avg +"(dB)");
 
@@ -298,9 +300,15 @@ public class ThirdFragment extends Fragment {
         Cursor result = database.rawQuery(sql,null);
         result.moveToFirst();
         while (!result.isAfterLast()){
-            listvalue.add(result.getString(1));
-            listday.add(result.getString(2));
-            listvaluekorea.add(result.getString(3));
+//            listvalue.add(result.getString(1));
+//            listday.add(result.getString(2));
+//            listvaluekorea.add(result.getString(3));
+
+            ListData data = new ListData();
+            data.setId(result.getInt(0));
+            data.setListTime(result.getString(2));
+            data.setListValue(result.getString(1));
+            mListData.add(data);
 
             result.moveToNext();
         }
@@ -317,7 +325,7 @@ public class ThirdFragment extends Fragment {
 
     class ListViewAdapter extends BaseAdapter {
         private Context mContext = null;
-        private ArrayList<ListData> mListData = new ArrayList<ListData>();
+//        private ArrayList<ListData> mListData = new ArrayList<ListData>();
 
         public ListViewAdapter(Context mContext){
             super();
