@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -54,13 +55,14 @@ public class GauseFragment extends Fragment {
     private MyHandler myHandler;
     String time;
 
-    TextView textView;
+    TextView noise_text;
 
     SpeedView speedView;
     PointerSpeedometer pointerSpeedometer;
     ProgressiveGauge progressiveGauge;
     View view;
     FrameLayout fl;
+    LinearLayout chlayout;
 
     SQLiteDatabase database;
 
@@ -104,7 +106,8 @@ public class GauseFragment extends Fragment {
         myHandler = new MyHandler();
 
 //        textView = (TextView) view.findViewById(R.id.textView);
-        fl = (FrameLayout) view.findViewById(R.id.layout);
+        noise_text = (TextView) view.findViewById(R.id.noise_text);
+        chlayout = (LinearLayout) view.findViewById(R.id.changeLayout);
 
 //        pointerSpeedometer= (PointerSpeedometer) view.findViewById(R.id.pointerSpeedometer);
 //        pointerSpeedometer.setMaxSpeed(120);
@@ -197,7 +200,7 @@ public class GauseFragment extends Fragment {
             //String to int 형변환.
             float data2 = Float.parseFloat(data1);
 
-            textView.setText(data1);
+            noise_text.setText(data1);
             //speedView.speedTo(data2);
             //pointerSpeedometer.speedTo(data2);
             progressiveGauge.speedTo(data2);
@@ -246,16 +249,16 @@ public class GauseFragment extends Fragment {
 
     void NoiseBackgroundChange_base() {
 
-        fl.setBackgroundColor(Color.parseColor("#50CCE7"));
-        pointerSpeedometer.setBackgroundCircleColor(Color.parseColor("#50CCE7"));
+        chlayout.setBackgroundColor(Color.WHITE);
+        //pointerSpeedometer.setBackgroundCircleColor(Color.parseColor("#50CCE7"));
 
     }
     void NoiseBackgroundChange_alarm() {
 
-        fl.setBackgroundColor(Color.RED);
+        chlayout.setBackgroundColor(Color.RED);
 //        pointerSpeedometer.setCenterCircleColor(Color.RED);
 //        pointerSpeedometer.setBackgroundCircleColor(Color.RED);
-        progressiveGauge.setBackgroundColor(Color.RED);
+        //progressiveGauge.setBackgroundColor(Color.RED);
 //        fl.setVisibility();
 //        mp.start();
         Toast.makeText(view.getContext(), "층간 소음이 심합니다.!!!!!", Toast.LENGTH_SHORT).show();

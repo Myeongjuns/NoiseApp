@@ -37,7 +37,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="50dp"
-                android:layout_centerHorizontal="true"
                 app:sv_speedTextSize="30dp"
                 app:sv_unit="db"
                 app:sv_unitTextSize="30dp" />
@@ -69,11 +68,13 @@
                     android:textColor="#ffffff" />
 
                 <LinearLayout
+                    android:id="@+id/changeLayout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center">
 
                     <TextView
+                        android:id="@+id/noise_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="00"
