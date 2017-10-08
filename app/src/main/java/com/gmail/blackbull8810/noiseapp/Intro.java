@@ -29,7 +29,7 @@ public class Intro extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.intro); // xml과 java소스를 연결
         init();
-        handler.postDelayed(r, 2000);
+        handler.postDelayed(r, 1000);
     } // end of onCreate
 
     @Override

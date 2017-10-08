@@ -1,4 +1,4 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,8 +7,68 @@
     <!-- TODO: Update blank fragment layout -->
 
 
+    <LinearLayout
+        android:id="@+id/ll_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_alignParentTop="true"
+        android:background="@color/colorPrimary"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="날짜"
+            android:gravity="center"
+            android:textColor="#ffffff"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="소음수치"
+            android:gravity="center"
+            android:textColor="#ffffff"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="삭제"
+            android:gravity="center"
+            android:textColor="#ffffff"/>
+    </LinearLayout>
+
     <ListView
         android:id="@+id/listview1"
+        android:layout_below="@id/ll_top"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-</FrameLayout>
+
+    <TextView
+        android:id="@+id/tv_empty_data"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="초과된 소음 정보가 없습니다."
+        android:textSize="22dp"
+        android:textStyle="bold"
+        android:textColor="#bdbdbd"
+        android:visibility="gone"/>
+
+    <Button
+        android:id="@+id/btn_all_delete"
+
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="전체삭제"
+        android:layout_gravity="bottom"
+        android:background="@color/colorPrimary"
+        android:textColor="#ffffff"
+        android:textStyle="bold"
+        android:textSize="17dp"/>
+</RelativeLayout>
